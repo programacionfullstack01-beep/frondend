@@ -18,46 +18,75 @@ function getApiBaseForAdmin() {
     return `http://${host}:4020`;
   }
 
-  // Si existe un API_BASE global (definido en ../login/java.js), úsalo
-  // Nota: puede incluir /api, y el backend soporta ambas rutas.
   try {
-    // eslint-disable-next-line no-undef
     if (typeof API_BASE === "string" && API_BASE.trim()) {
-      // eslint-disable-next-line no-undef
       return API_BASE.replace(/\/+$/, "");
     }
   } catch {
-    // ignore
   }
 
-  // Último fallback: mismo origen si existe, si no localhost
   if (origin && origin !== "null") return origin.replace(/\/+$/, "");
   return "http://localhost:4020";
 }
 
 async function crearProfesor(payload) {
   const base = getApiBaseForAdmin();
-  const url = `${base}/teachers`;
+  const baseTrimmed = base.replace(/\/+$/, "");
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const candidates = [
+    "/teachers",
+    "/api/teachers",
+    `${baseTrimmed}/teachers`,
+    `${baseTrimmed}/api/teachers`,
+  ];
 
-  let data = null;
-  try {
-    data = await res.json();
-  } catch {
-    // ignore
+  if (/\/api$/.test(baseTrimmed)) {
+    candidates.push(`${baseTrimmed.replace(/\/api$/, "")}/teachers`);
   }
 
-  if (!res.ok) {
-    const msg = data?.message || `Error HTTP ${res.status}`;
-    throw new Error(msg);
+  const errors = [];
+
+  for (const url of candidates) {
+    try {
+      console.log("[crearProfesor] POST", url);
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const contentType = res.headers.get("content-type") || "";
+      const isJson = contentType.includes("application/json");
+
+      let data = null;
+      if (isJson) {
+        try {
+          data = await res.json();
+        } catch {
+        }
+      }
+
+      if (!res.ok) {
+        const msg = data?.message || `Error HTTP ${res.status}`;
+        throw new Error(msg);
+      }
+
+      if (!isJson || !data) {
+        throw new Error("El servidor respondió, pero no devolvió JSON (posible redirect/URL incorrecta).");
+      }
+
+      return data;
+    } catch (err) {
+      errors.push(`${url}: ${err?.message || err}`);
+    }
   }
 
-  return data;
+  const last = errors[errors.length - 1] || "Error desconocido";
+  const hint =
+    last.includes("Failed to fetch") || last.includes("NetworkError")
+      ? " (Revisa CORS/URL/servidor encendido)"
+      : "";
+  throw new Error(`${last}${hint}`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -92,4 +121,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
