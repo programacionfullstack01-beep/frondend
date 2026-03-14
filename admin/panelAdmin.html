@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Panel del Administrador</h1>
+        <div class="perfil" aria-label="Administrador" title="Administrador">
+            <span class="material-symbols-outlined" aria-hidden="true">supervisor_account</span>
+        </div>
+        <p id="bienvenida"></p>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+
+        <div class="admin-grid" aria-label="Opciones de administrador">
+            <a class="admin-card" id="crearEstudianteCard" href="./crearEstudiante.html">
+                <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+                <div class="admin-card__text">
+                    <h2>Crear estudiante</h2>
+                    <p>Registrar un estudiante nuevo</p>
+                </div>
+            </a>
+
+            <a class="admin-card" href="./crearProfesor.html">
+                <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+                <div class="admin-card__text">
+                    <h2>Crear profesor</h2>
+                    <p>Registrar un profesor nuevo</p>
+                </div>
+            </a>
+
+            <a class="admin-card" href="./crearCurso.html">
+                <span class="material-symbols-outlined" aria-hidden="true">library_add</span>
+                <div class="admin-card__text">
+                    <h2>Crear curso</h2>
+                    <p>Crear un curso académico</p>
+                </div>
+            </a>
+
+            <a class="admin-card" href="./matricular.html">
+                <span class="material-symbols-outlined" aria-hidden="true">playlist_add</span>
+                <div class="admin-card__text">
+                    <h2>Matricular estudiante</h2>
+                    <p>Crear grupo y asignar estudiante</p>
+                </div>
+            </a>
+
+            <a class="admin-card" href="./cambiarContrasena.html">
+                <span class="material-symbols-outlined" aria-hidden="true">lock_reset</span>
+                <div class="admin-card__text">
+                    <h2>Cambiar contraseña</h2>
+                    <p>Actualizar clave de usuario</p>
+                </div>
+            </a>
+            <a class="admin-card" href="./crearGrupo.html">
+                <span class="material-symbols-outlined" aria-hidden="true">lock_reset</span>
+                <div class="admin-card__text">
+                    <h2>Crear Grupo</h2>
+                    <p>Crear grupo para cada curso</p>
+                </div>
+            </a>
+        </div>
+
+    </main>
+
+    <script src="../login/java.js"></script>
+    <script src="../admin/panelAdmin.js"></script>
+</body>
+
+</html>

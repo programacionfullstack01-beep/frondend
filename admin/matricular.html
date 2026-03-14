@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Matricular Estudiante</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Matricular Estudiante</h1>
+        <p id="bienvenida"></p>
+        <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+        <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
+
+        <section>
+            <form id="formCrearGrupo">
+                <h2 class="admin-subtitle">1: Crear grupo (curso + profesor)</h2>
+
+                <label>Nombre del grupo</label>
+                <input type="text" id="grupoName" placeholder="Ej: 10A - Matemáticas" required>
+
+                <label>Curso</label>
+                <select id="grupoCourseId" required></select>
+
+                <label>Profesor</label>
+                <select id="grupoTeacherId" required></select>
+
+                <button type="submit">Crear grupo</button>
+            </form>
+
+            <form id="formMatricularEstudiante">
+                <h2 class="admin-subtitle">2: Inscribir estudiante en grupo</h2>
+
+                <label>Estudiante</label>
+                <select id="matriculaStudentId" required></select>
+
+                <label>Grupo</label>
+                <select id="matriculaGroupId" required></select>
+
+                <button type="submit">Matricular</button>
+                <button type="button" id="btnRecargarMatriculas" class="admin-secondary">Recargar listas</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../login/java.js"></script>
+    <script src="../admin/panelAdmin.js"></script>
+</body>
+
+</html>
+

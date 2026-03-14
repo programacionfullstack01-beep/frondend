@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Académico - Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login/styles.css">
+</head>
+<body class="fondo">
+    <main class="contenedor-login">
+        <h1>Ingreso al Sistema</h1>
+
+        <!-- Formulario de login -->
+        <form id="formLogin" class="formulario">
+
+            <!-- Selección de rol -->
+            <label for="rol">Selecciona tu rol</label>
+            <select id="rol" required>
+                <option value="">-- Selecciona --</option>
+                <option value="admin">Administrador</option>
+                <option value="profesor">Profesor</option>
+                <option value="estudiante">Estudiante</option>
+            </select>
+
+            <!-- Usuario -->
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" autocomplete="username" required>
+
+            <!-- Contraseña -->
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" autocomplete="current-password" required>
+
+            <button type="submit" id="btnLogin">Iniciar Sesión</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Sistema Académico | Stiven / Kevin / Wilmar / Lore</p>
+    </footer>
+
+    <script src="/login/java.js"></script>
+</body>
+</html>

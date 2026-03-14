@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Estudiante</title>
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Panel del Estudiante</h1>
+    <p id="bienvenidaEstudiante"></p>
+    <button onclick="cerrarSesionEstudiante()">Cerrar Sesión</button>
+</header>
+
+<main>
+
+    <section>
+        <h2>Mis Notas</h2>
+
+        <!-- Filtro de búsqueda -->
+        <div class="filtros">
+            <label for="buscarMateria">Buscar por Materia:</label>
+            <input type="text" id="buscarMateria" placeholder="Escribe la materia">
+
+            <label for="buscarProfesor">Buscar por Profesor:</label>
+            <input type="text" id="buscarProfesor" placeholder="Escribe el nombre del profesor">
+
+            <button onclick="filtrarNotas()">Filtrar</button>
+            <button onclick="mostrarNotasEstudiante()">Mostrar todas</button>
+        </div>
+
+        <!-- Tabla de notas -->
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Nota</th>
+                    <th>Profesor</th>
+                </tr>
+            </thead>
+            <tbody id="tablaMisNotas">
+                <!-- Las notas se mostrarán dinámicamente -->
+            </tbody>
+        </table>
+
+        <!-- Promedio -->
+        <div id="promedio" class="promedio"></div>
+    </section>
+
+</main>
+
+<script src="../login/java.js"></script>
+</body>
+</html>

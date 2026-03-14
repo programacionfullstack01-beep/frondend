@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Estudiante</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Crear Estudiante</h1>
+        <p id="bienvenida"></p>
+        <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+        <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
+
+        <section>
+            <form id="formCrearEstudiante">
+                <label>Identificación</label>
+                <input type="text" id="estudianteIdentification" required>
+
+                <label>Nombres</label>
+                <input type="text" id="estudianteName" required>
+
+                <label>Apellidos</label>
+                <input type="text" id="estudianteLastname" required>
+
+                <label>Usuario</label>
+                <input type="text" id="estudianteUser" required>
+
+                <label>Contraseña</label>
+                <input type="password" id="estudiantePassword" required>
+
+                <button type="submit">Crear estudiante</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../login/java.js"></script>
+    <script src="../admin/panelAdmin.js"></script>
+</body>
+
+</html>
+

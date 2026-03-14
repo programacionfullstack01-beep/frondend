@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Profesor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Crear Profesor</h1>
+        <p id="bienvenida"></p>
+        <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+        <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
+
+        <section>
+            <form id="formCrearProfesor">
+                <label>Identificación</label>
+                <input type="text" id="profesorIdentification" required>
+
+                <label>Tipo de identificación</label>
+                <select id="profesorTypeIdentification" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="CC">CC</option>
+                    <option value="CE">CE</option>
+                    <option value="TI">TI</option>
+                    <option value="PAS">Pasaporte</option>
+                </select>
+
+                <label>Nombres</label>
+                <input type="text" id="profesorName" required>
+
+                <label>Apellidos</label>
+                <input type="text" id="profesorLastname" required>
+
+                <label>Profesión</label>
+                <input type="text" id="profesorProfessorship" required>
+
+                <label>Usuario</label>
+                <input type="text" id="profesorUser" required>
+
+                <label>Contraseña</label>
+                <input type="password" id="profesorPassword" required>
+
+                <button type="submit">Crear profesor</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../login/java.js"></script>
+    <script src="../admin/panelAdmin.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar Contraseña</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Cambiar Contraseña</h1>
+        <p id="bienvenida"></p>
+        <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+        <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
+
+        <section>
+            <form id="formCambiarContrasena">
+                <label>Rol</label>
+                <select id="pwdRole" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="estudiante">Estudiante</option>
+                    <option value="profesor">Profesor</option>
+                </select>
+
+                <label>Usuario</label>
+                <input type="text" id="pwdUser" required>
+
+                <label>Nueva contraseña</label>
+                <input type="password" id="pwdNewPassword" required>
+
+                <label>Confirmar nueva contraseña</label>
+                <input type="password" id="pwdConfirmPassword" required>
+
+                <button type="submit">Cambiar contraseña</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../login/java.js"></script>
+    <script src="../admin/panelAdmin.js"></script>
+</body>
+
+</html>
+
