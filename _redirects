@@ -1,3 +1,5 @@
 # Netlify proxy: enruta /api/* al backend de Render (evita CORS)
 /api/*  https://backend-ytap.onrender.com/api/:splat  200
 
+# SPA fallback (mantener al final)
+/*  /index.html  200

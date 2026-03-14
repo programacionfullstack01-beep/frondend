@@ -1,7 +1,12 @@
-// En producción (Netlify), usa un proxy con `_redirects` para evitar CORS:
-//   /api/*  https://TU-BACKEND.onrender.com/api/:splat  200
-// Así el frontend puede llamar a `/api/...` sin depender del dominio.
-const API_BASE = '/api';
+// Base de API:
+// - En Netlify: usar proxy con `/api/*` (ver `_redirects` o `netlify.toml`)
+// - En local con Live Server: apuntar directo al backend local
+function resolveApiBase() {
+    const { hostname, port } = window.location;
+    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+    if (isLocalHost && port && port !== "4020") return "http://localhost:4020/api";
+    return "/api";
+}
 
 // ===============================
 // INICIALIZACIÓN DEL SISTEMA
@@ -62,7 +67,7 @@ if (formLogin) {
         }
 
         try {
-            const response = await fetch('/auth/login', {
+            const response = await fetch(`${resolveApiBase()}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,7 +79,17 @@ if (formLogin) {
                 })
             });
 
-            const data = await response.json();
+            const contentType = response.headers.get("content-type") || "";
+            const isJson = contentType.includes("application/json");
+            const data = isJson ? await response.json() : null;
+
+            if (!response.ok) {
+                throw new Error(data?.message || `Error HTTP ${response.status}`);
+            }
+
+            if (!data) {
+                throw new Error("El servidor respondió, pero no devolvió JSON (posible redirect/URL incorrecta).");
+            }
 
             if (data.success) {
                 const rolDesdeBackend =
@@ -105,7 +120,7 @@ if (formLogin) {
             }
         } catch (error) {
             console.error('Login error:', error);
-            alert('An error occurred during login.');
+            alert(error?.message || 'An error occurred during login.');
         }
     });
 }
