@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lastname: document.getElementById("profesorLastname")?.value?.trim(),
       professorship: document.getElementById("profesorProfessorship")?.value?.trim(),
       user: document.getElementById("profesorUser")?.value?.trim(),
-      password: document.getElementById("profesorPassword")?.value,
+      password: document.getElementById("profesorPassword")?.value?.trim(),
       status: true,
     };
 

@@ -1,0 +1,3 @@
+# Netlify proxy: enruta /api/* al backend de Render (evita CORS)
+/api/*  https://backend-ytap.onrender.com/api/:splat  200
+

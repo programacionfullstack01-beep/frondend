@@ -1,4 +1,7 @@
-const API_BASE = 'https://backend-ytap.onrender.com/api';
+// En producción (Netlify), usa un proxy con `_redirects` para evitar CORS:
+//   /api/*  https://TU-BACKEND.onrender.com/api/:splat  200
+// Así el frontend puede llamar a `/api/...` sin depender del dominio.
+const API_BASE = '/api';
 
 // ===============================
 // INICIALIZACIÓN DEL SISTEMA
