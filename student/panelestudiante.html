@@ -16,40 +16,29 @@
 <main>
 
     <section>
-        <h2>Mis Notas</h2>
-
-        <!-- Filtro de búsqueda -->
-        <div class="filtros">
-            <label for="buscarMateria">Buscar por Materia:</label>
-            <input type="text" id="buscarMateria" placeholder="Escribe la materia">
-
-            <label for="buscarProfesor">Buscar por Profesor:</label>
-            <input type="text" id="buscarProfesor" placeholder="Escribe el nombre del profesor">
-
-            <button onclick="filtrarNotas()">Filtrar</button>
-            <button onclick="mostrarNotasEstudiante()">Mostrar todas</button>
-        </div>
-
-        <!-- Tabla de notas -->
+        <h2>Mis Cursos</h2>
         <table border="1" cellpadding="5">
             <thead>
                 <tr>
-                    <th>Materia</th>
-                    <th>Nota</th>
+                    <th>Curso</th>
+                    <th>Grupo</th>
                     <th>Profesor</th>
+                    <th>Nota</th>
                 </tr>
             </thead>
-            <tbody id="tablaMisNotas">
-                <!-- Las notas se mostrarán dinámicamente -->
+            <tbody id="tablaMisCursos">
+                <!-- Se llenará dinámicamente -->
             </tbody>
         </table>
+    </section>
 
-        <!-- Promedio -->
-        <div id="promedio" class="promedio"></div>
+    <section>
+        <!-- (Se removió la sección "Mis Notas" con filtros) -->
     </section>
 
 </main>
 
 <script src="/js/login.js"></script>
+<script src="/js/student/panelEstudiante.js"></script>
 </body>
 </html>

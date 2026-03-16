@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Matricular Estudiante</title>
+    <title>Asignar Docente a Curso</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>Matricular Estudiante</h1>
+        <h1>Asignar Docente a Curso</h1>
         <p id="bienvenida"></p>
         <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
         <button onclick="cerrarSesion()">Cerrar Sesión</button>
@@ -22,20 +22,20 @@
         <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
 
         <section>
-            <form id="formMatricularEstudiante">
-                <h2 class="admin-subtitle">Matricular estudiante a curso (vía grupo)</h2>
-
-                <label>Estudiante</label>
-                <select id="matriculaStudentId" required></select>
-
-                <label>Curso</label>
-                <select id="matriculaCourseId" required></select>
+            <form id="formAsignarDocente">
+                <h2 class="admin-subtitle">Asignar docente a curso (en un grupo)</h2>
 
                 <label>Grupo</label>
-                <select id="matriculaGroupId" required></select>
+                <select id="asignarGroupId" required></select>
 
-                <button type="submit">Matricular</button>
-                <button type="button" id="btnRecargarMatriculas" class="admin-secondary">Recargar listas</button>
+                <label>Curso</label>
+                <select id="asignarCourseId" required></select>
+
+                <label>Profesor</label>
+                <select id="asignarTeacherId" required></select>
+
+                <button type="submit">Asignar</button>
+                <button type="button" id="btnRecargarAsignarDocente" class="admin-secondary">Recargar listas</button>
             </form>
         </section>
     </main>
@@ -43,7 +43,7 @@
     <script src="/js/login.js"></script>
     <script src="/js/admin/panelAdmin.js"></script>
     <script src="/js/admin/adminApi.js"></script>
-    <script src="/js/admin/matricular.js"></script>
+    <script src="/js/admin/asignarDocente.js"></script>
 </body>
 
 </html>

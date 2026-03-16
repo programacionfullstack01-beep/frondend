@@ -3,6 +3,7 @@ function setAdminMensaje(texto, tipo = "info") {
   if (!el) return;
   el.textContent = texto;
   el.dataset.tipo = tipo;
+  el.classList.toggle("is-error", tipo === "error");
 }
 
 function apiBase() {
@@ -36,4 +37,3 @@ async function fetchJson(url, options) {
 
   return data;
 }
-

@@ -108,6 +108,7 @@ if (formLogin) {
                 }
 
                 const usuarioSesion = {
+                    id: data.id || null,
                     usuario: usuarioIngresado,
                     nombreCompleto: data.name || usuarioIngresado,
                     rol: rolDesdeBackend
@@ -126,6 +127,11 @@ if (formLogin) {
 }
 
 function cerrarSesionEstudiante() {
+    localStorage.removeItem("usuarioActivo");
+    window.location.href = "../index.html";
+}
+
+function cerrarSesionProfesor() {
     localStorage.removeItem("usuarioActivo");
     window.location.href = "../index.html";
 }

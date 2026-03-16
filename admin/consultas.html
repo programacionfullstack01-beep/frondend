@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consultas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Consultas</h1>
+        <p id="bienvenida"></p>
+        <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </header>
+
+    <main>
+        <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
+
+        <section>
+            <button type="button" id="btnRecargarConsultas">Recargar</button>
+        </section>
+
+        <section id="cursos">
+            <h2 class="admin-subtitle">Cursos</h2>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCursos"></tbody>
+            </table>
+        </section>
+
+        <section id="grupos">
+            <h2 class="admin-subtitle">Grupos</h2>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaGrupos"></tbody>
+            </table>
+        </section>
+
+        <section id="estudiantes">
+            <h2 class="admin-subtitle">Estudiantes</h2>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Identificación</th>
+                        <th>Estado</th>
+                        <th>Grupos</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaEstudiantes"></tbody>
+            </table>
+        </section>
+
+        <section id="profesores">
+            <h2 class="admin-subtitle">Profesores</h2>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Identificación</th>
+                        <th>Área</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaProfesores"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="/js/login.js"></script>
+    <script src="/js/admin/panelAdmin.js"></script>
+    <script src="/js/admin/adminApi.js"></script>
+    <script src="/js/admin/consultas.js"></script>
+</body>
+
+</html>

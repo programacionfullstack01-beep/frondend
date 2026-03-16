@@ -19,26 +19,13 @@ function fillSelect(selectEl, items, getValue, getLabel) {
 }
 
 async function recargarListas() {
-  const [courses, teachers, students, groups] = await Promise.all([
+  const [courses, students, assignments] = await Promise.all([
     fetchJson(apiUrl("courses")),
-    fetchJson(apiUrl("teachers")),
     fetchJson(apiUrl("students")),
-    fetchJson(apiUrl("groups")),
+    fetchJson(apiUrl("assignments")),
   ]);
 
-  fillSelect(
-    document.getElementById("grupoCourseId"),
-    courses,
-    (c) => c._id,
-    (c) => c.name || c._id
-  );
-
-  fillSelect(
-    document.getElementById("grupoTeacherId"),
-    teachers,
-    (t) => t._id,
-    (t) => `${t.name || ""} ${t.lastname || ""}`.trim() || t.user || t._id
-  );
+  const courseSelect = document.getElementById("matriculaCourseId");
 
   fillSelect(
     document.getElementById("matriculaStudentId"),
@@ -48,27 +35,42 @@ async function recargarListas() {
   );
 
   fillSelect(
-    document.getElementById("matriculaGroupId"),
-    groups,
-    (g) => g._id,
-    (g) => {
-      const courseName = g.course?.name ? ` - ${g.course.name}` : "";
-      const teacherName = g.teacher?.name ? ` - ${g.teacher.name} ${g.teacher.lastname || ""}` : "";
-      return `${g.name || g._id}${courseName}${teacherName}`.trim();
-    }
+    courseSelect,
+    courses,
+    (c) => c._id,
+    (c) => c.name || c._id
   );
+
+  fillSelect(
+    document.getElementById("matriculaGroupId"),
+    [],
+    (a) => a._id,
+    () => ""
+  );
+
+  // Mejor UX: si hay cursos y no hay uno seleccionado, seleccionar el primero.
+  if (courseSelect && !courseSelect.value && courseSelect.options.length > 1) {
+    courseSelect.selectedIndex = 1;
+  }
+
+  return { assignments: Array.isArray(assignments) ? assignments : [] };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const formCrearGrupo = document.getElementById("formCrearGrupo");
   const formMatricular = document.getElementById("formMatricularEstudiante");
   const btnRecargar = document.getElementById("btnRecargarMatriculas");
+  const courseSelect = document.getElementById("matriculaCourseId");
+  const groupSelect = document.getElementById("matriculaGroupId");
+
+  let cachedAssignments = [];
 
   const init = async () => {
     try {
       setAdminMensaje("Cargando listas...", "info");
-      await recargarListas();
+      const { assignments } = await recargarListas();
+      cachedAssignments = assignments;
       setAdminMensaje("", "info");
+      if (courseSelect) courseSelect.dispatchEvent(new Event("change"));
     } catch (err) {
       setAdminMensaje(err?.message || "No se pudieron cargar las listas.", "error");
       console.error(err);
@@ -81,33 +83,36 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRecargar.addEventListener("click", init);
   }
 
-  if (formCrearGrupo) {
-    formCrearGrupo.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      setAdminMensaje("Creando grupo...", "info");
+  const fillGroupsByCourse = () => {
+    if (!courseSelect || !groupSelect) return;
+    const courseId = courseSelect.value;
+    if (!courseId) {
+      fillSelect(groupSelect, [], (a) => a._id, () => "");
+      return;
+    }
+    const filtered = cachedAssignments.filter((a) => String(a?.course?._id || a?.course) === String(courseId));
 
-      const payload = {
-        name: document.getElementById("grupoName")?.value?.trim(),
-        courseId: document.getElementById("grupoCourseId")?.value,
-        teacherId: document.getElementById("grupoTeacherId")?.value,
-      };
-
-      try {
-        const created = await fetchJson(apiUrl("groups"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        setAdminMensaje(`Grupo creado: ${created?.name || ""}`.trim(), "ok");
-        formCrearGrupo.reset();
-        await recargarListas();
-      } catch (err) {
-        setAdminMensaje(err?.message || "No se pudo crear el grupo.", "error");
-        console.error(err);
+    fillSelect(
+      groupSelect,
+      filtered,
+      (a) => a._id,
+      (a) => {
+        const groupName = a?.group?.name || "(Sin grupo)";
+        const groupDesc = a?.group?.description ? ` - ${a.group.description}` : "";
+        const teacherName = `${a?.teacher?.name || ""} ${a?.teacher?.lastname || ""}`.trim();
+        const teacherLabel = teacherName ? ` (${teacherName})` : "";
+        return `${groupName}${groupDesc}${teacherLabel}`;
       }
-    });
-  }
+    );
+
+    if (filtered.length === 0) {
+      setAdminMensaje("No hay grupos para este curso. Ve a 'Asignar docente' y crea una asignación.", "info");
+    } else {
+      setAdminMensaje("", "info");
+    }
+  };
+
+  if (courseSelect) courseSelect.addEventListener("change", fillGroupsByCourse);
 
   if (formMatricular) {
     formMatricular.addEventListener("submit", async (e) => {
@@ -115,10 +120,13 @@ document.addEventListener("DOMContentLoaded", () => {
       setAdminMensaje("Matriculando...", "info");
 
       const studentId = document.getElementById("matriculaStudentId")?.value;
-      const groupId = document.getElementById("matriculaGroupId")?.value;
+      const assignmentId = document.getElementById("matriculaGroupId")?.value;
 
       try {
-        await fetchJson(apiUrl(`groups/${groupId}/students`), {
+        if (!studentId || !courseSelect?.value || !assignmentId) {
+          throw new Error("Selecciona estudiante, curso y grupo.");
+        }
+        await fetchJson(apiUrl(`assignments/${assignmentId}/students`), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ studentId }),
@@ -126,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setAdminMensaje("Matrícula realizada.", "ok");
         formMatricular.reset();
+        if (courseSelect) courseSelect.dispatchEvent(new Event("change"));
       } catch (err) {
         setAdminMensaje(err?.message || "No se pudo matricular.", "error");
         console.error(err);
@@ -133,4 +142,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-

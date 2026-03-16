@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Matricular Estudiante</title>
+    <title>Crear Grupo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>Matricular Estudiante</h1>
+        <h1>Crear Grupo</h1>
         <p id="bienvenida"></p>
         <button onclick="window.location.href='./panelAdmin.html'">Volver</button>
         <button onclick="cerrarSesion()">Cerrar Sesión</button>
@@ -22,20 +22,16 @@
         <div id="adminMensaje" class="admin-mensaje" role="status" aria-live="polite"></div>
 
         <section>
-            <form id="formMatricularEstudiante">
-                <h2 class="admin-subtitle">Matricular estudiante a curso (vía grupo)</h2>
+            <form id="formCrearGrupo">
+                <h2 class="admin-subtitle">Crear grupo (curso + profesor)</h2>
 
-                <label>Estudiante</label>
-                <select id="matriculaStudentId" required></select>
+                <label>Nombre del grupo</label>
+                <input type="text" id="grupoName" placeholder="Ej: 10A" required>
 
-                <label>Curso</label>
-                <select id="matriculaCourseId" required></select>
+                <label>Descripción</label>
+                <input type="text" id="grupoDescription" placeholder="Ej: Jornada mañana" />
 
-                <label>Grupo</label>
-                <select id="matriculaGroupId" required></select>
-
-                <button type="submit">Matricular</button>
-                <button type="button" id="btnRecargarMatriculas" class="admin-secondary">Recargar listas</button>
+                <button type="submit">Crear grupo</button>
             </form>
         </section>
     </main>
@@ -43,7 +39,7 @@
     <script src="/js/login.js"></script>
     <script src="/js/admin/panelAdmin.js"></script>
     <script src="/js/admin/adminApi.js"></script>
-    <script src="/js/admin/matricular.js"></script>
+    <script src="/js/admin/crearGrupo.js"></script>
 </body>
 
 </html>
