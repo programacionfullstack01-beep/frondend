@@ -1,3 +1,8 @@
+
+/**
+ * Normaliza texto para insertarlo en HTML mediante `innerHTML`.
+ * Convierte caracteres especiales (`<`, `>`, `&`, comillas) a entidades HTML.
+ */
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -7,19 +12,31 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+/**
+ * Escribe HTML de filas dentro de un `<tbody>` por id.
+ */
 function setTbodyHtml(tbodyId, rowsHtml) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
   tbody.innerHTML = rowsHtml || "";
 }
 
+/**
+ * Ids de secciones disponibles en la página (también usados como hash).
+ */
 const CONSULTA_SECTIONS = ["cursos", "grupos", "estudiantes", "profesores"];
 
+/**
+ * Lee el hash de la URL y retorna un modo válido.
+ */
 function getConsultaModeFromHash() {
   const hash = (window.location.hash || "").replace("#", "").trim().toLowerCase();
   return CONSULTA_SECTIONS.includes(hash) ? hash : "";
 }
 
+/**
+ * Muestra/oculta secciones dependiendo del modo.
+ */
 function applyConsultaVisibility(mode) {
   for (const sectionId of CONSULTA_SECTIONS) {
     const section = document.getElementById(sectionId);
@@ -28,6 +45,9 @@ function applyConsultaVisibility(mode) {
   }
 }
 
+/**
+ * Carga datos desde el backend y pinta las tablas.
+ */
 async function cargarConsultas(mode = "") {
   const title =
     mode === "cursos" ? "cursos" :
@@ -84,6 +104,7 @@ async function cargarConsultas(mode = "") {
             <td>${escapeHtml(s?.user || "")}</td>
             <td>${escapeHtml(s?.identification || "")}</td>
             <td>${escapeHtml(String(s?.status ?? ""))}</td>
+            <td>${escapeHtml(String(s?.password ?? ""))}</td>
             <td>${escapeHtml(String(groupsCount))}</td>
           </tr>`;
         })
@@ -102,6 +123,7 @@ async function cargarConsultas(mode = "") {
             <td>${escapeHtml(t?.identification || "")}</td>
             <td>${escapeHtml(t?.professorship || "")}</td>
             <td>${escapeHtml(String(t?.status ?? ""))}</td>
+            <td>${escapeHtml(String(t?.password ?? ""))}</td>
           </tr>`;
         })
         .join("")
@@ -114,6 +136,9 @@ async function cargarConsultas(mode = "") {
   }
 }
 
+/**
+ * Maneja recarga manual 
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("btnRecargarConsultas");
   const applyModeAndLoad = () => {

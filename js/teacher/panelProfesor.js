@@ -1,3 +1,7 @@
+/**
+ * - Validar sesión activa del profesor en `localStorage` (`usuarioActivo`).
+ */
+
 function getUsuarioActivo() {
     try {
         return JSON.parse(localStorage.getItem("usuarioActivo") || "null");
@@ -6,6 +10,9 @@ function getUsuarioActivo() {
     }
 }
 
+/**
+ * Verifica que exista una sesión activa con rol "profesor".
+ */
 function ensureProfesorSession() {
     const usuario = getUsuarioActivo();
     if (!usuario || usuario.rol !== "profesor") {
@@ -19,6 +26,9 @@ function ensureProfesorSession() {
     return usuario;
 }
 
+/**
+ * Realiza una petición HTTP y retorna el cuerpo como JSON.
+ */
 async function fetchJson(url, options) {
     const res = await fetch(url, options);
     const contentType = res.headers.get("content-type") || "";
@@ -29,6 +39,9 @@ async function fetchJson(url, options) {
     return data;
 }
 
+/**
+ * Normaliza texto para insertarlo en HTML mediante `innerHTML`.
+ */
 function escapeHtml(value) {
     return String(value ?? "")
         .replaceAll("&", "&amp;")
@@ -38,6 +51,9 @@ function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 }
 
+/**
+ * Renderiza las tarjetas de cursos en el contenedor `#tarjetasCursosProfesor`.
+ */
 function renderAssignmentCards(assignments) {
     const cards = document.getElementById("tarjetasCursosProfesor");
     if (!cards) return;
@@ -63,6 +79,9 @@ function renderAssignmentCards(assignments) {
     }
 }
 
+/**
+ * Entry point de la página: corre cuando el DOM ya está listo.
+ */
 document.addEventListener("DOMContentLoaded", async () => {
     const usuario = ensureProfesorSession();
     if (!usuario) return;
@@ -90,4 +109,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert(err?.message || "No se pudieron cargar tus cursos.");
     }
 });
-
